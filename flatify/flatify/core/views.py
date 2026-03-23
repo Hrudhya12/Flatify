@@ -24,7 +24,7 @@ def get_next_user(flat, task_type):
         counts.append((p.user, count))
 
     counts.sort(key=lambda x: x[1])
-    return counts[0][0]  # user
+    return counts[0][0]  
 
 
 def rotate_profiles(flat, task_type):
@@ -36,9 +36,9 @@ def rotate_profiles(flat, task_type):
     profiles = list(Profile.objects.filter(flat=flat).order_by('order'))
 
     if len(profiles) < 2:
-        return  # nothing to rotate
+        return  
 
-    # Move first to last
+    
     first = profiles[0]
     for i in range(1, len(profiles)):
         profiles[i].order = i - 1
@@ -50,7 +50,7 @@ def rotate_profiles(flat, task_type):
 
 @login_required
 def dashboard(request):
-    # Ensure user has a profile and flat
+    
     try:
         profile = request.user.profile
     except Profile.DoesNotExist:
@@ -61,14 +61,14 @@ def dashboard(request):
 
     flat = profile.flat
 
-    # Fair assignment: who should do what next
+    
     cleaning_user_obj = get_next_user(flat, 'cleaning')
     essentials_user_obj = get_next_user(flat, 'essentials')
 
     cleaning_user = cleaning_user_obj.username if cleaning_user_obj else "Not set yet"
     essentials_user = essentials_user_obj.username if essentials_user_obj else "Not set yet"
 
-    # History only for this flat
+    
     history = TaskHistory.objects.filter(flat=flat).order_by('-completed_at')[:10]
 
     return render(request, 'core/dashboard.html', {
@@ -91,14 +91,14 @@ def complete_task(request, task_type):
     if not flat:
         raise Http404("You are not assigned to a flat")
 
-    # Create a history entry
+   
     TaskHistory.objects.create(
         flat=flat,
         user=request.user,
         task_type=task_type
     )
 
-    # Rotate profiles for this flat and task type
+    
     rotate_profiles(flat, task_type)
 
     return redirect('dashboard')
