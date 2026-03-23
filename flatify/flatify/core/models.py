@@ -12,7 +12,7 @@ class Flat(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     flat = models.ForeignKey(Flat, on_delete=models.CASCADE, null=True, blank=True)
-    order = models.PositiveIntegerField(default=0)  # rotation position
+    order = models.PositiveIntegerField(default=0)  
 
     def __str__(self):
         return self.user.username
