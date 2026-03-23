@@ -23,4 +23,5 @@ jobs:
 
       - name: Run Django tests
         run: |
-          python manage.py test
+           cd flatify
+           python manage.py test
