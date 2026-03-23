@@ -22,4 +22,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Django tests
-        run: python manage.py test
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          python manage.py test
