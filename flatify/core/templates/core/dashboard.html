@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flatify Dashboard</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}?v=4">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">Flatify</div>
+    <div class="nav-right">
+        <a href="/logout/" class="nav-link">Logout</a>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <!-- WELCOME BOX -->
+    <div class="welcome-box">
+        <div class="welcome-title">Welcome back, {{ user.username }} 👋</div>
+        <div class="welcome-sub">Here’s what’s happening in your flat today</div>
+    </div>
+
+    <!-- TWO-COLUMN GRID -->
+    <div class="content-grid">
+
+        <!-- LEFT COLUMN (TASKS) -->
+        <div class="left-column">
+            <h2>Current Responsibilities</h2>
+
+            <div class="task-card cleaning">
+                <span class="icon">🧹</span>
+                <a href="{% url 'complete_task' 'cleaning' %}" class="button">Mark Cleaning Done</a>
+            </div>
+
+            <div class="task-card essentials">
+                <span class="icon">🛒</span>
+                <a href="{% url 'complete_task' 'essentials' %}" class="button">Mark Essentials Done</a>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN (HISTORY) -->
+        <div class="right-column">
+            <h2>History</h2>
+
+            {% for item in history %}
+                <div class="history-item">
+                    {{ item.user.username }} completed {{ item.task_type }} on {{ item.completed_at }}
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
