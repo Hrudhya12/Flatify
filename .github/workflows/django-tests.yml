@@ -22,6 +22,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Django tests
-        run: |
-          cd flatify
-          python manage.py test
+        run: python manage.py test
