@@ -14,7 +14,10 @@
 <div class="navbar">
     <div class="nav-left">Flatify</div>
     <div class="nav-right">
-        <a href="/logout/" class="nav-link">Logout</a>
+        <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+    </form>
     </div>
 </div>
 
