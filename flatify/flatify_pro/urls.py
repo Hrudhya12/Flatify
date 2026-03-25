@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from .views import dashboard, complete_task
 
 urlpatterns = [
-    path('', include('flatify.core.urls')),
-    path('admin/', admin.site.urls),
+    path('', dashboard, name='dashboard'),
+    path('complete/<str:task_type>/', complete_task, name='complete_task'),
 ]
